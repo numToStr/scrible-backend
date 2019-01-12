@@ -22,4 +22,9 @@ Password.prototype.hash = function hash() {
     });
 };
 
+// For verifying password
+Password.prototype.verify = function verify(hash) {
+    return bcrypt.compare(this.password, hash);
+};
+
 module.exports = Password;

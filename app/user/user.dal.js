@@ -13,9 +13,12 @@ UserDAL.prototype.createUser = function createUser(data) {
     return newUser.save();
 };
 
-UserDAL.prototype.getUser = function getUser() {
+UserDAL.prototype.getUser = function getUser(options = {}) {
+    const { select = this.select } = options;
+
     return UserModel.findOne(this.context)
-        .select(this.select)
+        .select(select)
+        .lean()
         .exec();
 };
 
