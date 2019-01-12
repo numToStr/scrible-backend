@@ -1,8 +1,13 @@
 {
     "name": "scrible-backend",
     "version": "1.0.0",
-    "description": "",
-    "main": "index.js",
+    "description": "Scrible App's server",
+    "bin": "app/www.js",
+    "main": "server.js",
+    "engines": {
+        "node": "^10.15.0",
+        "npm": "^6.4.1"
+    },
     "scripts": {
         "start": "NODE_ENV=production node ./bin/www.js",
         "dev": "NODE_ENV=development nodemon -r dotenv/config ./bin/www.js"
