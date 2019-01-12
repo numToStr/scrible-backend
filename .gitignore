@@ -1,0 +1,28 @@
+# IDE related files
+.vscode
+.idea
+.DS_Store
+
+# development related files
+node_modules
+
+# development keys
+*.env*
+keys.dev.js
+
+# exluding misc folders
+playground
+
+# scripts files
+scripts
+
+# excluding old files
+backup
+
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
+
+# extra files
+dump.rdb
