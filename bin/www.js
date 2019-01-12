@@ -1,10 +1,11 @@
 #!/usr/bin/env node
 
 const http = require("http");
+const app = require("../server");
 
 const { PORT } = require("../config/env.keys");
 
-const server = http.createServer();
+const server = http.createServer(app);
 
 server.listen(PORT);
 
