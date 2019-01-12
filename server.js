@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 
 const customError = require("./services/validation/custom.error");
+const middlewares = require("./middlewares/express.middleware");
 const api = require("./app/app");
 
 /**
@@ -12,6 +13,9 @@ const api = require("./app/app");
  * @returns {Error}
  */
 global.$Error = customError;
+
+// Registering app middlewares
+middlewares(app, express);
 
 // Registering app routes
 app.use("/api", api);
