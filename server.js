@@ -42,12 +42,6 @@ app.use((
     // eslint-disable-next-line
     next
 ) => {
-    console.log(`
-    ${message}
-    ${status}
-    ${name}
-    `);
-
     return res.status(status).json({
         success: false,
         message,
