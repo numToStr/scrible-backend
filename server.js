@@ -1,6 +1,17 @@
 const express = require("express");
 const app = express();
 
+const customError = require("./services/validation/custom.error");
+
+/**
+ * Binding Custom Error to global
+ * It will attach $Error constructor class to global
+ * $Error class extends the native javascript Error Object
+ *
+ * @returns {Error}
+ */
+global.$Error = customError;
+
 /**
  * Error Handling
  *
@@ -8,7 +19,7 @@ const app = express();
  * 2. Second block is used to handle & send error
  */
 app.use((req, res, next) => {
-    const error = new Error("URL not found!");
+    const error = new $Error("URL not found!", 404, "ServerError");
     next(error);
 });
 
@@ -20,7 +31,7 @@ app.use((
     },
     req,
     res,
-    /* eslint-disable-next-line */
+    // eslint-disable-next-line
     next
 ) => {
     console.log(`
