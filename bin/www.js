@@ -14,7 +14,11 @@ const server = http.createServer(app);
 // Connecting MongoDB ============
 mongoose.connect(
     MONGO_URI,
-    { useNewUrlParser: true },
+    {
+        useNewUrlParser: true,
+        useCreateIndex: true,
+        useFindAndModify: true
+    },
     error => {
         // if mongoDB is unable to connect
         // throws error => shutdown app
