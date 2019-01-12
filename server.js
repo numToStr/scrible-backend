@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 
 const customError = require("./services/validation/custom.error");
+const api = require("./app/app");
 
 /**
  * Binding Custom Error to global
@@ -11,6 +12,9 @@ const customError = require("./services/validation/custom.error");
  * @returns {Error}
  */
 global.$Error = customError;
+
+// Registering app routes
+app.use("/api", api);
 
 /**
  * Error Handling
