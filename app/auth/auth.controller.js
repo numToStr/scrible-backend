@@ -28,12 +28,34 @@ const authSignup = async (req, res, next) => {
         // Creating hash from plain text password
         const hash = await new Password(password).hash();
 
-        await userDal.createUser({ username, email, password: hash });
+        const {
+            createdAt,
+            updatedAt,
+            __v,
+            password: pwd,
+            ...user
+        } = await userDal.createUser({ username, email, password: hash });
+
+        // Generating access and refresh token
+        const {
+            accessToken,
+            accessTokenExp,
+            refreshToken
+        } = new TokenGenerator({
+            _id: user._id,
+            role: ["user"]
+        })
+            .access()
+            .refresh();
 
         res.status(200).json({
             success: true,
-            message: "User successfully created",
-            action: "login"
+            message: "Signup successful",
+            action: "login",
+            user,
+            accessToken,
+            accessTokenExp,
+            refreshToken
         });
     } catch (error) {
         next(error);
@@ -82,6 +104,7 @@ const authLogin = async (req, res, next) => {
         res.status(200).json({
             success: true,
             message: "Login Successful",
+            action: "login",
             user,
             accessToken,
             accessTokenExp,
