@@ -3,6 +3,24 @@ const UserDAL = require("../user/user.dal");
 const Password = require("../../services/password/password.service");
 const TokenGenerator = require("../../services/token/token.generate");
 
+const authenticate = async (req, res, next) => {
+    try {
+        const { $id } = req.$user;
+
+        // Getting user details
+        const user = await new UserDAL({ _id: $id }).getUser();
+
+        res.status(200).json({
+            success: true,
+            message: "Authentication successful",
+            action: "login",
+            user
+        });
+    } catch (error) {
+        next(error);
+    }
+};
+
 // For signing up new user
 const authSignup = async (req, res, next) => {
     try {
@@ -42,7 +60,7 @@ const authSignup = async (req, res, next) => {
             accessTokenExp,
             refreshToken
         } = new TokenGenerator({
-            _id: user._id,
+            $id: user._id,
             role: ["user"]
         })
             .access()
@@ -93,7 +111,7 @@ const authLogin = async (req, res, next) => {
             accessTokenExp,
             refreshToken
         } = new TokenGenerator({
-            _id: isUser._id,
+            $id: isUser._id,
             role: ["user"]
         })
             .access()
@@ -115,4 +133,4 @@ const authLogin = async (req, res, next) => {
     }
 };
 
-module.exports = { authSignup, authLogin };
+module.exports = { authenticate, authSignup, authLogin };

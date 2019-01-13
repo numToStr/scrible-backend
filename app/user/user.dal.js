@@ -3,7 +3,7 @@ const UserModel = require("./user.model");
 class UserDAL {
     constructor(context = {}) {
         this.context = context;
-        this.select = "-password -createdAt -updatedAt";
+        this.select = "-password -createdAt -updatedAt -__v";
     }
 }
 
