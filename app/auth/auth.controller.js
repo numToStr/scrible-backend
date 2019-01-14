@@ -2,6 +2,7 @@ const UserDAL = require("../user/user.dal");
 
 const Password = require("../../services/password/password.service");
 const TokenGenerator = require("../../services/token/token.generate");
+const TokenVerify = require("../../services/token/token.verify");
 
 const authenticate = async (req, res, next) => {
     try {
@@ -15,6 +16,33 @@ const authenticate = async (req, res, next) => {
             message: "Authentication successful",
             action: "login",
             user
+        });
+    } catch (error) {
+        next(error);
+    }
+};
+
+const authRefresh = (req, res, next) => {
+    try {
+        const { token } = req.query;
+
+        const {
+            refreshDecoded: { $id, role }
+        } = new TokenVerify(token).refresh();
+
+        const {
+            accessToken,
+            accessTokenExp,
+            refreshToken
+            // eslint-disable-next-line
+        } = new TokenGenerator({ $id, role }).access().refresh();
+
+        res.status(200).json({
+            success: true,
+            message: "Successful",
+            accessToken,
+            accessTokenExp,
+            refreshToken
         });
     } catch (error) {
         next(error);
@@ -133,4 +161,9 @@ const authLogin = async (req, res, next) => {
     }
 };
 
-module.exports = { authenticate, authSignup, authLogin };
+module.exports = {
+    authenticate,
+    authRefresh,
+    authSignup,
+    authLogin
+};

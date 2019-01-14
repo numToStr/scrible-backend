@@ -14,4 +14,12 @@ const signupSchema = usernameSchema.concat(passwordSchema).concat(emailSchema);
 
 const loginSchema = usernameSchema.concat(passwordSchema);
 
-module.exports = { signupSchema, loginSchema };
+const tokenSchema = Joi.object().keys({
+    token: Joi.binary()
+        .encoding("base64")
+        .min(15)
+        .required()
+        .error(new Error("Invalid token"))
+});
+
+module.exports = { signupSchema, loginSchema, tokenSchema };
