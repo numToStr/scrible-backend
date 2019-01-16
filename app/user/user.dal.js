@@ -7,10 +7,10 @@ class UserDAL {
     }
 }
 
-UserDAL.prototype.createUser = function createUser(data) {
-    const newUser = new UserModel(data);
+UserDAL.prototype.createUser = async function createUser(data) {
+    const newUser = await new UserModel(data).save();
 
-    return newUser.save();
+    return newUser.toObject();
 };
 
 UserDAL.prototype.getUser = function getUser(options = {}) {
