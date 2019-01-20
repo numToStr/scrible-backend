@@ -22,7 +22,8 @@
         "helmet": "^3.15.0",
         "joi": "^14.3.1",
         "jsonwebtoken": "^8.4.0",
-        "mongoose": "^5.4.2"
+        "mongoose": "^5.4.2",
+        "ms": "^2.1.1"
     },
     "devDependencies": {
         "dotenv": "^6.2.0",

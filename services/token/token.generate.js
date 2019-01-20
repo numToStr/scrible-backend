@@ -1,6 +1,5 @@
 const jwt = require("jsonwebtoken");
-const differenceInSeconds = require("date-fns/differenceInSeconds");
-const addDays = require("date-fns/addDays");
+const ms = require("ms");
 
 const {
     ACCESS_TOKEN_KEY,
@@ -12,10 +11,7 @@ const {
 class Token {
     constructor(context) {
         this.context = context;
-        this.accessTokenExp = differenceInSeconds(
-            addDays(new Date(), 1),
-            new Date()
-        );
+        this.accessTokenExp = ms(ACCESS_TOKEN_EXP) / 1000;
     }
 }
 
